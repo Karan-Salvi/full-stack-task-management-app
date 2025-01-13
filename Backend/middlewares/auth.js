@@ -2,9 +2,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config({});
 
-
-async function checkAuthenticated(req,res,next){ 
-
+async function checkAuthenticated(req, res, next) {
   const tokenValue = req.cookies[process.env.TOKEN_NAME];
 
   if (!tokenValue) {
@@ -35,6 +33,6 @@ async function checkAuthenticated(req,res,next){
       message: "Something went wrong..",
     });
   }
-
 }
-  
+
+module.exports = checkAuthenticated;
