@@ -22,8 +22,8 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 app.use(cookieParser());
 
-app.use("api/v1", userRoute);
-app.use("api/v1", menuRoute);
-app.use("api/v1", orderRoute);
+app.use("/api/v1", userRoute);
+app.use("/api/v1", menuRoute);
+app.use("/api/v1", orderRoute);
 
 module.exports = app;

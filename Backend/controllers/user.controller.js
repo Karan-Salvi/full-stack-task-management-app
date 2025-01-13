@@ -2,6 +2,8 @@ const User = require("../models/user.model.js");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors.js");
 const { z } = require("zod");
 const dotenv = require("dotenv");
+const ms = require("ms");
+
 dotenv.config({});
 
 const register = catchAsyncErrors(async (req, res) => {
@@ -15,9 +17,12 @@ const register = catchAsyncErrors(async (req, res) => {
   if (!result.success) {
     return res.status(400).json({
       success: false,
-      message: result.error.message,
+      message: result.error.issues[0].message,
     });
   }
+  const { username, password } = req.body;
+
+  console.log("I am called : " + username + password);
 
   const user = await User.create({
     username,
@@ -51,7 +56,7 @@ const login = catchAsyncErrors(async (req, res) => {
   if (!result.success) {
     return res.status(400).json({
       success: false,
-      message: result.error.message,
+      message: result.error.issues[0].message,
     });
   }
 
@@ -82,10 +87,13 @@ const login = catchAsyncErrors(async (req, res) => {
     });
   }
 
+  const tokenExpiryMs = ms(process.env.REFRESH_TOKEN_EXPIRY || "7d");
+  const expirationDate = new Date(Date.now() + tokenExpiryMs);
+
   return res
     .status(200)
     .cookie(process.env.TOKEN_NAME, token, {
-      maxAge: process.env.REFRESH_TOKEN_EXPIRY,
+      expires: expirationDate,
     })
     .json({
       success: true,
