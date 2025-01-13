@@ -41,6 +41,20 @@ const register = catchAsyncErrors(async (req, res) => {
 const login = catchAsyncErrors(async (req, res) => {
   const { username, password } = req.body;
 
+  const loginSchema = z.object({
+    username: z.string().min(4).max(50),
+    password: z.string().min(6),
+  });
+
+  const result = loginSchema.safeParse(req.body);
+
+  if (!result.success) {
+    return res.status(400).json({
+      success: false,
+      message: result.error.message,
+    });
+  }
+
   const user = await User.findOne({ username });
 
   if (!user) {
