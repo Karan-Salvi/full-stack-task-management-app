@@ -22,7 +22,7 @@ const register = catchAsyncErrors(async (req, res) => {
   }
   const { username, password } = req.body;
 
-  console.log("I am called : " + username + password);
+ 
 
   const user = await User.create({
     username,

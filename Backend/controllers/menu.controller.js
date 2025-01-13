@@ -24,23 +24,29 @@ const createMenuItem = catchAsyncErrors(async (req, res) => {
     name: z.string().min(4).max(100),
     category: z
       .string()
-      .enum([
-        "appetizers",
-        "main course",
-        "side dishes",
-        "desserts",
-        "salads",
-        "beverages",
-        "soups",
-        "grills",
-        "vegetarian",
-        "vegan",
-        "seafood",
-        "pasta",
-        "burgers",
-        "sandwiches",
-        "pizza",
-      ]),
+      .refine(
+        (value) =>
+          [
+            "appetizers",
+            "main course",
+            "side dishes",
+            "desserts",
+            "salads",
+            "beverages",
+            "soups",
+            "grills",
+            "vegetarian",
+            "vegan",
+            "seafood",
+            "pasta",
+            "burgers",
+            "sandwiches",
+            "pizza",
+          ].includes(value),
+        {
+          message: "Invalid value",
+        }
+      ),
     price: z.number(),
   });
 
@@ -49,17 +55,16 @@ const createMenuItem = catchAsyncErrors(async (req, res) => {
   if (!result.success) {
     return res.status(400).json({
       success: false,
-      message: result.error.message,
+      message: result.error.issues[0].message,
     });
   }
 
-  const { name, category, price, availability } = req.body;
+  const { name, category, price } = req.body;
 
   const menu = await Menu.create({
     name,
     category,
     price,
-    availability,
   });
 
   if (!menu) {
@@ -81,23 +86,29 @@ const updateMenuItem = catchAsyncErrors(async (req, res) => {
     name: z.string().min(4).max(100),
     category: z
       .string()
-      .enum([
-        "appetizers",
-        "main course",
-        "side dishes",
-        "desserts",
-        "salads",
-        "beverages",
-        "soups",
-        "grills",
-        "vegetarian",
-        "vegan",
-        "seafood",
-        "pasta",
-        "burgers",
-        "sandwiches",
-        "pizza",
-      ]),
+      .refine(
+        (value) =>
+          [
+            "appetizers",
+            "main course",
+            "side dishes",
+            "desserts",
+            "salads",
+            "beverages",
+            "soups",
+            "grills",
+            "vegetarian",
+            "vegan",
+            "seafood",
+            "pasta",
+            "burgers",
+            "sandwiches",
+            "pizza",
+          ].includes(value),
+        {
+          message: "Invalid value",
+        }
+      ),
     price: z.number(),
     availability: z.boolean(),
   });
@@ -107,7 +118,7 @@ const updateMenuItem = catchAsyncErrors(async (req, res) => {
   if (!result.success) {
     return res.status(400).json({
       success: false,
-      message: result.error.message,
+      message: result.error.issues[0].message,
     });
   }
 
@@ -160,4 +171,4 @@ const deleteMenuItem = catchAsyncErrors(async (req, res) => {
   });
 });
 
-module.exports = { getAllMenu, createMenuItem, updateMenuItem,deleteMenuItem };
+module.exports = { getAllMenu, createMenuItem, updateMenuItem, deleteMenuItem };
