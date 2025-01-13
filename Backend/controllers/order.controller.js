@@ -5,7 +5,7 @@ const dotenv = require("dotenv");
 dotenv.config({});
 
 const getUserOrders = catchAsyncErrors(async (req, res) => {
-  const orders = await Order.findById(req.user._id);
+  const orders = await Order.findOne({ userId: req.user._id });
 
   if (!orders) {
     return res.status(404).json({
@@ -21,7 +21,7 @@ const getUserOrders = catchAsyncErrors(async (req, res) => {
 });
 
 const placeOrder = catchAsyncErrors(async (req, res) => {
-  const { userId, items } = req.body;
+  const { userId, items, totalAmount } = req.body;
 
   const order = await Order.create({
     userId,
@@ -45,5 +45,5 @@ const placeOrder = catchAsyncErrors(async (req, res) => {
 
 module.exports = {
   getUserOrders,
-  placeOrder
+  placeOrder,
 };
