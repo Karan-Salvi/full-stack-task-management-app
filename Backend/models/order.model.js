@@ -36,14 +36,7 @@ const orderSchema = new mongoose.Schema({
   },
 });
 
-orderSchema.pre("save", function (next) {
-  let total = 0;
-  this.items.forEach((item) => {
-    total += item.quantity * item.menuItemId.price;
-  });
-  this.totalAmount = total;
-  next();
-});
+
 
 const Order = mongoose.model("Order", orderSchema);
 
