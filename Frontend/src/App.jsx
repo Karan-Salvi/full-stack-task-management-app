@@ -9,8 +9,10 @@ import Order from "./pages/OrderPage/Order";
 import OrderHistory from "./pages/OrderPage/OrderHistory";
 import Navbar from "./components/Navbar";
 import NotFound from "./pages/NotFound/NotFound";
+import { useSelector } from "react-redux";
 
 function App() {
+  
   return (
     <>
       <Navbar />
