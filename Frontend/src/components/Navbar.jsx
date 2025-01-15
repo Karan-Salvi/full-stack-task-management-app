@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { IoCartOutline } from "react-icons/io5";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
 
 const Navbar = () => {
+  const user = useSelector((store) => store.user);
+  console.log(user);
   return (
     <nav class=" border-gray-200 dark:bg-gray-900">
       <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -22,53 +27,65 @@ const Navbar = () => {
             </div>
           </button>
 
-          <button
-            type="button"
-            class="flex text-sm bg-orange-500 rounded-full md:me-0 focus:ring-4 focus:ring-orange-100 "
-            id="user-menu-button"
-            aria-expanded="false"
-            data-dropdown-toggle="user-dropdown"
-            data-dropdown-placement="bottom"
-          >
-            <span class="sr-only">Open user menu</span>
-            <img
-              class="w-8 h-8 rounded-full"
-              src="/images/default.jpg"
-              alt="user photo"
-            />
-          </button>
-          {/* <!-- Dropdown menu --> */}
-          <div
-            class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
-            id="user-dropdown"
-          >
-            <div class="px-4 py-3">
-              <span class="block text-sm text-gray-900 dark:text-white">
-                Username
-              </span>
-              <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                username@123
-              </span>
-            </div>
-            <ul class="py-2" aria-labelledby="user-menu-button">
-              <li>
-                <a
-                  href="#"
-                  class="block mx-1 px-4 py-2 text-sm text-gray-700 rounded-md hover:bg-orange-50 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >
-                  My Orders
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="block mx-1 px-4 py-2  hover:bg-orange-50 rounded-md  text-sm text-gray-700  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >
-                  Sign out
-                </a>
-              </li>
-            </ul>
-          </div>
+          {user.username === "undefind" ? (
+            <Link
+              to={"/login"}
+              className="text-white w-full  bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-orange-300 rounded-lg text-base roboto font-bold  px-5 py-2 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
+            >
+              Login
+            </Link>
+          ) : (
+            <>
+              <button
+                type="button"
+                class="flex text-sm bg-orange-500 rounded-full md:me-0 focus:ring-4 focus:ring-orange-100 "
+                id="user-menu-button"
+                aria-expanded="false"
+                data-dropdown-toggle="user-dropdown"
+                data-dropdown-placement="bottom"
+              >
+                <span class="sr-only">Open user menu</span>
+                <img
+                  class="w-8 h-8 rounded-full"
+                  src="/images/default.jpg"
+                  alt="user photo"
+                />
+              </button>
+
+              <div
+                class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+                id="user-dropdown"
+              >
+                <div class="px-4 py-3">
+                  <span class="block text-sm text-gray-900 dark:text-white">
+                    Username
+                  </span>
+                  <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">
+                    username@123
+                  </span>
+                </div>
+                <ul class="py-2" aria-labelledby="user-menu-button">
+                  <li>
+                    <a
+                      href="#"
+                      class="block mx-1 px-4 py-2 text-sm text-gray-700 rounded-md  hover:bg-orange-50 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    >
+                      My Orders
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      class="block mx-1 px-4 py-2  hover:bg-orange-50 rounded-md  text-sm text-gray-700  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                    >
+                      Sign out
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </>
+          )}
+
           <button
             data-collapse-toggle="navbar-user"
             type="button"
@@ -86,9 +103,9 @@ const Navbar = () => {
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M1 1h15M1 7h15M1 13h15"
               />
             </svg>
@@ -102,8 +119,8 @@ const Navbar = () => {
             <li>
               <a
                 href="#"
-                class="block py-2 px-3 poppins hover:text-white text-orange-500 
-                hover:bg-orange-500 rounded md:bg-transparent md:text-gray-400 md:hover:text-orange-400 md:p-0"
+                class="block py-2 px-3 poppins hover:text-white md:hover:bg-white text-orange-500 
+                hover:bg-orange-500 rounded md:bg-transparent md:text-gray-500 md:hover:text-orange-400 md:p-0"
                 aria-current="page"
               >
                 Home
@@ -112,7 +129,7 @@ const Navbar = () => {
             <li>
               <a
                 href="#"
-                class="block py-2 px-3  poppins text-orange-500   hover:text-white hover:bg-orange-400 rounded md:bg-transparent md:text-gray-500 md:hover:text-orange-400 md:p-0"
+                class="block py-2 px-3  poppins text-orange-500  md:hover:bg-white   hover:text-white hover:bg-orange-400 rounded md:bg-transparent md:text-gray-500 md:hover:text-orange-400 md:p-0"
                 aria-current="page"
               >
                 Menu
@@ -121,7 +138,7 @@ const Navbar = () => {
             <li>
               <a
                 href="#"
-                class="block py-2 px-3 poppins  text-orange-500  hover:text-white hover:bg-orange-400 rounded md:bg-transparent md:text-gray-500 md:hover:text-orange-400 md:p-0"
+                class="block py-2 px-3 poppins  text-orange-500 md:hover:bg-white hover:text-white hover:bg-orange-400 rounded md:bg-transparent md:text-gray-500 md:hover:text-orange-400 md:p-0"
                 aria-current="page"
               >
                 Orders

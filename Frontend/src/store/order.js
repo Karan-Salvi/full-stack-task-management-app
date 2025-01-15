@@ -1,6 +1,6 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-const orderSlice = configureStore({
+const orderSlice = createSlice({
   name: "order",
   initialState: {
     order: [],

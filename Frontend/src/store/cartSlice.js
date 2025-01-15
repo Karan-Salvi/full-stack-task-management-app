@@ -1,6 +1,6 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-const cartSlice = configureStore({
+const cartSlice = createSlice({
   name: "cart",
   initialState: {
     cart: [],
@@ -8,9 +8,11 @@ const cartSlice = configureStore({
   reducers: {
     addToCart: (state, action) => {
       state.cart.push(action.payload);
+      return state;
     },
     removeFromCart: (state, action) => {
       state.cart = state.cart.filter((item) => item._id !== action.payload);
+      return state;
     },
   },
 });
