@@ -1,7 +1,14 @@
 import React from "react";
+import Ordercard from "../../components/Ordercard";
 
 const Order = () => {
-  return <div>Orders Page</div>;
+  return (
+    <>
+      <Ordercard />
+      <Ordercard />
+      <Ordercard />
+    </>
+  );
 };
 
 export default Order;

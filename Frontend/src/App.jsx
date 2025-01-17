@@ -10,9 +10,9 @@ import OrderHistory from "./pages/OrderPage/OrderHistory";
 import Navbar from "./components/Navbar";
 import NotFound from "./pages/NotFound/NotFound";
 import { useSelector } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
 
 function App() {
-  
   return (
     <>
       <Navbar />
@@ -27,6 +27,7 @@ function App() {
         <Route path="/order-history" element={<OrderHistory />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Toaster />
     </>
   );
 }

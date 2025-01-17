@@ -1,7 +1,29 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import useLogin from "../../hooks/useLogin";
+import { useDispatch } from "react-redux";
+import { userActions } from "../../store/userSlice";
 
 const Login = () => {
+  const { user, loading, error, login, logout } = useLogin();
+  const userNameElement = useRef();
+  const passwordElement = useRef();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    await login(userNameElement.current.value, passwordElement.current.value);
+    userNameElement.current.value = null;
+    passwordElement.current.value = null;
+    return navigate("/menu");
+  };
+
+  useEffect(() => {
+    if (user) {
+      dispatch(userActions.addUser(user));
+    }
+  }, [user]);
+
   return (
     <>
       <section className="w-full font-sans height-screen flex justify-center items-center  bg-orange-300 p-4 ">
@@ -25,7 +47,7 @@ const Login = () => {
               Welcome back! Please login to your account.
             </p>
 
-            <form className="space-y-6 w-full">
+            <form className="space-y-6 w-full" onSubmit={handleLogin}>
               <div class="relative z-0 w-full mb-5 group">
                 <input
                   type="text"
@@ -34,6 +56,7 @@ const Login = () => {
                   class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-orange-500 focus:outline-none focus:ring-0 focus:border-orange-600 peer"
                   placeholder=" "
                   required
+                  ref={userNameElement}
                 />
                 <label
                   for="floating_email"
@@ -50,6 +73,7 @@ const Login = () => {
                   class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-orange-500 focus:outline-none focus:ring-0 focus:border-orange-600 peer"
                   placeholder=" "
                   required
+                  ref={passwordElement}
                 />
                 <label
                   for="floating_password"

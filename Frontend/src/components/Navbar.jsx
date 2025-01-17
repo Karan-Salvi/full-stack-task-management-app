@@ -3,10 +3,10 @@ import { IoCartOutline } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-
 const Navbar = () => {
   const user = useSelector((store) => store.user);
-  console.log(user);
+
+  const cart = useSelector((store) => store.cart.cart);
   return (
     <nav class=" border-gray-200 dark:bg-gray-900">
       <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -16,18 +16,18 @@ const Navbar = () => {
           </span>
         </a>
         <div class="flex items-center gap-4 md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <button
-            type="button"
+          <Link
+            to={"/cart"}
             class="relative inline-flex items-center p-1 text-sm font-medium text-center text-white  rounded-lg"
           >
             <IoCartOutline className="text-2xl text-orange-500 font-bold" />
             <span class="sr-only">Notifications</span>
             <div class="absolute inline-flex items-center justify-center w-5 h-5 text-[0.65rem] font-bold text-white bg-orange-600 border-2 border-white rounded-full -top-1 -end-1 dark:border-gray-900">
-              20
+              {cart?.length}
             </div>
-          </button>
+          </Link>
 
-          {user.username === "undefind" ? (
+          {user.username == "undefined" ? (
             <Link
               to={"/login"}
               className="text-white w-full  bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-orange-300 rounded-lg text-base roboto font-bold  px-5 py-2 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
@@ -61,7 +61,7 @@ const Navbar = () => {
                     Username
                   </span>
                   <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">
-                    username@123
+                    {user.username}
                   </span>
                 </div>
                 <ul class="py-2" aria-labelledby="user-menu-button">
@@ -117,32 +117,32 @@ const Navbar = () => {
         >
           <ul class="flex flex-col gap-1 font-medium p-4 md:p-0 mt-4 border border-orange-100 rounded-md  bg-orange-50 md:bg-transparent md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
-              <a
-                href="#"
+              <Link
+                to={"/"}
                 class="block py-2 px-3 poppins hover:text-white md:hover:bg-white text-orange-500 
                 hover:bg-orange-500 rounded md:bg-transparent md:text-gray-500 md:hover:text-orange-400 md:p-0"
                 aria-current="page"
               >
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to={"/menu"}
                 class="block py-2 px-3  poppins text-orange-500  md:hover:bg-white   hover:text-white hover:bg-orange-400 rounded md:bg-transparent md:text-gray-500 md:hover:text-orange-400 md:p-0"
                 aria-current="page"
               >
                 Menu
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                to={"/order"}
                 class="block py-2 px-3 poppins  text-orange-500 md:hover:bg-white hover:text-white hover:bg-orange-400 rounded md:bg-transparent md:text-gray-500 md:hover:text-orange-400 md:p-0"
                 aria-current="page"
               >
                 Orders
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
