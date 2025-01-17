@@ -22,8 +22,6 @@ const register = catchAsyncErrors(async (req, res) => {
   }
   const { username, password } = req.body;
 
- 
-
   const user = await User.create({
     username,
     password,
@@ -93,6 +91,10 @@ const login = catchAsyncErrors(async (req, res) => {
   return res
     .status(200)
     .cookie(process.env.TOKEN_NAME, token, {
+      path: "/",
+      sameSite: "None",
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
       expires: expirationDate,
     })
     .json({
