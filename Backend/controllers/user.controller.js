@@ -85,9 +85,6 @@ const login = catchAsyncErrors(async (req, res) => {
     });
   }
 
-  const tokenExpiryMs = ms(process.env.REFRESH_TOKEN_EXPIRY || "7d");
-  const expirationDate = new Date(Date.now() + tokenExpiryMs);
-
   return res
     .status(200)
     .cookie(process.env.TOKEN_NAME, token, {
@@ -95,7 +92,7 @@ const login = catchAsyncErrors(async (req, res) => {
       sameSite: "None",
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
-      expires: expirationDate,
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     })
     .json({
       success: true,
