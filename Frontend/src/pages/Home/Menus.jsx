@@ -73,7 +73,7 @@ const Menus = () => {
         </div>
 
         <div class="w-11/12 flex justify-between items-start gap-4">
-          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 ">
+          <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 place-items-center">
             {filteredMenu.map((item) => (
               <Menucard key={item._id} item={item} handleId={handleId} />
             ))}
