@@ -11,14 +11,17 @@ const usePlaceOrder = () => {
     setError(null);
 
     try {
-      const response = await fetch("http://localhost:5000/api/v1/order", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId, items, totalAmount }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/v1/order`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId, items, totalAmount }),
+        }
+      );
 
       const result = await response.json();
 

@@ -14,6 +14,8 @@ import toast, { Toaster } from "react-hot-toast";
 import Homepage from "./pages/Home/Homepage";
 
 function App() {
+  let api = import.meta.env.VITE_API_URL
+  console.log("My backend URI", import.meta.env.VITE_API_URL);
   return (
     <>
       <Navbar />

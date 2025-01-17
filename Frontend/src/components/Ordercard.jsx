@@ -9,7 +9,7 @@ const Ordercard = ({ order }) => {
   
 
   let { menu, loading, error } = useFetchMenu(
-    "http://localhost:5000/api/v1/menu"
+    `${import.meta.env.VITE_API_URL}/api/v1/menu`
   );
 
   const menus = useSelector((state) => state.menu.menu);

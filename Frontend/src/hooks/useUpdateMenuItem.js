@@ -12,13 +12,16 @@ const useUpdateMenuItem = () => {
     setSuccessMessage(null);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/v1/menu/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(menuData),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/v1/menu/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(menuData),
+        }
+      );
 
       const result = await response.json();
 

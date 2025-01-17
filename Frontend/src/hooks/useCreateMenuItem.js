@@ -12,20 +12,22 @@ const useCreateMenuItem = () => {
     setSuccessMessage(null);
 
     try {
-      const response = await fetch("http://localhost:5000/api/v1/menu", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(menuData),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/v1/menu`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(menuData),
+        }
+      );
 
       const result = await response.json();
 
       if (result.success) {
         setSuccessMessage(result.message);
         toast.success(result.message);
-       
       } else {
         toast.error(result.message || "Failed to create menu item");
         setError(result.message || "Something went wrong");
@@ -38,13 +40,11 @@ const useCreateMenuItem = () => {
     }
   };
 
-  
   return {
     loading,
     error,
     successMessage,
     createMenuItem,
-    
   };
 };
 
