@@ -28,8 +28,8 @@ const createMenuItem = catchAsyncErrors(async (req, res) => {
         (value) =>
           [
             "appetizers",
-            "main course",
-            "side dishes",
+            "maincourse",
+            "sidedishes",
             "desserts",
             "salads",
             "beverages",
@@ -90,8 +90,8 @@ const updateMenuItem = catchAsyncErrors(async (req, res) => {
         (value) =>
           [
             "appetizers",
-            "main course",
-            "side dishes",
+            "maincourse",
+            "sidedishes",
             "desserts",
             "salads",
             "beverages",

@@ -1,7 +1,23 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import useSignUp from "../../hooks/useSignuUp";
 
 const Signup = () => {
+  const userNameElement = useRef();
+  const passwordElement = useRef();
+  const { user, loading, error, signUp } = useSignUp();
+  const navigate = useNavigate();
+
+  const handleSignup = async (event) => {
+    event.preventDefault();
+    await signUp(userNameElement.current.value, passwordElement.current.value);
+  };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/login");
+    }
+  }, [user]);
   return (
     <>
       <section className="w-full font-sans height-screen flex justify-center items-center  bg-orange-300 p-4 ">
@@ -17,7 +33,7 @@ const Signup = () => {
               Let's get started by creating a new account.
             </p>
 
-            <form className="space-y-6 w-full">
+            <form className="space-y-6 w-full" onSubmit={handleSignup}>
               <div class="relative z-0 w-full mb-5 group">
                 <input
                   type="text"
@@ -26,9 +42,10 @@ const Signup = () => {
                   class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-orange-500 focus:outline-none focus:ring-0 focus:border-orange-600 peer"
                   placeholder=" "
                   required
+                  ref={userNameElement}
                 />
                 <label
-                  for="floating_email"
+                  htmlFor="floating_email"
                   class="roboto peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-orange-600 peer-focus:dark:text-orange-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
                   Username
@@ -42,9 +59,10 @@ const Signup = () => {
                   class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-orange-500 focus:outline-none focus:ring-0 focus:border-orange-600 peer"
                   placeholder=" "
                   required
+                  ref={passwordElement}
                 />
                 <label
-                  for="floating_password"
+                  htmlFor="floating_password"
                   class="roboto peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-orange-600 peer-focus:dark:text-orange-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
                   Password

@@ -4,10 +4,15 @@ import useFetchMenu from "../../hooks/useFetchMenu";
 import { useDispatch, useSelector } from "react-redux";
 import { menuActions } from "../../store/menuSlice";
 import useSearchMenu from "../../hooks/useSearchMenu";
+import CreateMenu from "../../components/CreateMenu";
+import UpdateMenuCard from "../../components/UpdateMenuCard.";
 
 const Menu = () => {
+  const [createActive, setCreateActive] = useState(false);
   const [priceRange, setPriceRange] = useState([0, 2000]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [updateActive, setUpdateActive] = useState(false);
+  const [id, setId] = useState();
 
   const categories = [
     { id: 1, name: "Desserts" },
@@ -41,8 +46,27 @@ const Menu = () => {
   let { searchQuery, handleSearchChange, filteredMenu } =
     useSearchMenu(menuItems);
 
+  const ActiveCreate = () => {
+    setCreateActive(!createActive);
+  };
+
+  const handleId = (id) => {
+    setId(id);
+    setUpdateActive(true);
+  };
+
+  const setUpdateNo = () => {
+    setUpdateActive(false);
+  };
+
+  
+
   return (
     <>
+      {updateActive && <UpdateMenuCard id={id} ActiveCreate={setUpdateNo} />}
+
+      {createActive && <CreateMenu ActiveCreate={ActiveCreate} />}
+
       <section class="w-full h-auto flex flex-col justify-start items-center">
         <div class="w-11/12 py-5 flex justify-between items-center">
           <h1 class="self-center poppins text-2xl font-extrabold tracking-wider text-black whitespace-nowrap">
@@ -170,12 +194,19 @@ const Menu = () => {
                     </label>
                   </div>
                 </div>
+                <button
+                  type="submit"
+                  className="text-white w-full  bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:outline-none focus:ring-orange-300 rounded-lg text-base roboto font-bold  px-5 py-2 text-center dark:bg-orange-600 dark:hover:bg-orange-700 dark:focus:ring-orange-800"
+                  onClick={ActiveCreate}
+                >
+                  Create Item
+                </button>
               </div>
             </div>
           </div>
           <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 ">
             {filteredMenu.map((item) => (
-              <Menucard key={item._id} item={item} />
+              <Menucard key={item._id} item={item} handleId={handleId} />
             ))}
           </div>
         </div>

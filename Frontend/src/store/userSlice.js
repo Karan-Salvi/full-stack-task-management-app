@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // Load initial state from localStorage
 const initialUser = JSON.parse(localStorage.getItem("user")) || {
   username: "undefined",
-  _id: "6785381d98ce608d7df9dded",
+  _id: null,
 };
 
 const userSlice = createSlice({

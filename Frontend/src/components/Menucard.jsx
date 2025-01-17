@@ -6,14 +6,18 @@ import { FaMinusCircle } from "react-icons/fa";
 import useQuantity from "../hooks/useQuantity";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions } from "../store/cartSlice";
-const Menucard = ({ item }) => {
+import CreateMenu from "./CreateMenu";
+import { MdDelete } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
+import useDeleteMenuItem from "../hooks/useDeleteMenuItem ";
+import { menuActions } from "../store/menuSlice";
+
+const Menucard = ({ item, handleId }) => {
   const { quantity, increaseQuantity, decreaseQuantity, setQuantity } =
     useQuantity();
-  const { _id, name, category, price } = item;
+  const { _id, name, category, price, availability } = item;
 
-  
-
-  const dispatch = useDispatch();
+ 
 
   const addToCart = () => {
     const item = {
@@ -24,25 +28,51 @@ const Menucard = ({ item }) => {
       category,
     };
     dispatch(cartActions.addToCart(item));
-   
+  };
+
+  const { loading, error, successMessage, deleteMenuItem } =
+    useDeleteMenuItem();
+
+  const dispatch = useDispatch();
+
+  const handleDelete = async () => {
+    await deleteMenuItem(_id);
+
+    dispatch(menuActions.removeMenuItem(_id));
   };
 
   return (
     <>
       <div class="max-w-72 h-auto bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <div className=" w-full h-44 overflow-hidden">
+        <div className=" w-full h-44 overflow-hidden relative">
           <img
             class="rounded-t-lg w-full h-auto"
             src="./images/welcome.png"
             alt="Category image"
           />
+          <div className="absolute top-2 right-3 flex gap-2">
+            <button
+              className="border-2 border-black rounded-lg flex justify-center items-center"
+              onClick={handleDelete}
+            >
+              <MdDelete className="text-3xl text-white p-1" />
+            </button>
+            <button className="border-2 border-black rounded-lg flex justify-center items-center">
+              <FaRegEdit
+                className="text-3xl text-white border-black p-1"
+                onClick={() => {
+                  handleId(_id);
+                }}
+              />
+            </button>
+          </div>
         </div>
 
         <div class="p-1">
           <div className="w-full border-b-2 flex justify-between items-center p-2">
             <h3 className="text-lg font-extrabold roboto">{name}</h3>
             <p class="w-fit bg-gray-100 text-gray-700 roboto text-sm font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-purple-900 dark:text-purple-300">
-              Available
+              {availability ? "Available" : "Not Available"}
             </p>
           </div>
           <div className="w-full h-full flex  justify-between items-center gap-4 p-3">

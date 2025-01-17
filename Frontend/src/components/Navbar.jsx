@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { IoCartOutline } from "react-icons/io5";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { userActions } from "../store/userSlice";
 
 const Navbar = () => {
   const user = useSelector((store) => store.user);
-
   const cart = useSelector((store) => store.cart.cart);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(userActions.removeUser());
+  };
   return (
     <nav class=" border-gray-200 dark:bg-gray-900">
       <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -66,20 +70,20 @@ const Navbar = () => {
                 </div>
                 <ul class="py-2" aria-labelledby="user-menu-button">
                   <li>
-                    <a
-                      href="#"
+                    <Link
+                      to={"/order"}
                       class="block mx-1 px-4 py-2 text-sm text-gray-700 rounded-md  hover:bg-orange-50 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                     >
                       My Orders
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="#"
+                    <button
+                      onClick={handleLogout}
                       class="block mx-1 px-4 py-2  hover:bg-orange-50 rounded-md  text-sm text-gray-700  dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                     >
                       Sign out
-                    </a>
+                    </button>
                   </li>
                 </ul>
               </div>

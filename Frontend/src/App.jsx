@@ -11,12 +11,14 @@ import Navbar from "./components/Navbar";
 import NotFound from "./pages/NotFound/NotFound";
 import { useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
+import Homepage from "./pages/Home/Homepage";
 
 function App() {
   return (
     <>
       <Navbar />
       <Routes>
+        <Route path="/" element={<Homepage />} />
         <Route path="/" element={<AuthLayout />}>
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />

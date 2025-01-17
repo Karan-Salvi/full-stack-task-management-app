@@ -5,7 +5,7 @@ const dotenv = require("dotenv");
 dotenv.config({});
 
 const getUserOrders = catchAsyncErrors(async (req, res) => {
-  const orders = await Order.findOne({ userId: req.user._id });
+  const orders = await Order.find({ userId: req.user._id });
 
   if (!orders) {
     return res.status(404).json({

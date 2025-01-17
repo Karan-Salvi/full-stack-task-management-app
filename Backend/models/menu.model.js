@@ -9,8 +9,8 @@ const menuSchema = new mongoose.Schema({
     type: String,
     enum: [
       "appetizers",
-      "main course",
-      "side dishes",
+      "maincourse",
+      "sidedishes",
       "desserts",
       "salads",
       "beverages",

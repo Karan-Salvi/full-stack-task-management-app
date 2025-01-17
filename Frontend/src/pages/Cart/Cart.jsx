@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Cartcard from "../../components/Cartcard";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa6";
+import usePlaceOrder from "../../hooks/usePlaceOrder";
+import { orderActions } from "../../store/order";
 
 const Cart = () => {
   const cartItems = useSelector((store) => store.cart.cart);
   const user = useSelector((store) => store.user);
+  const { order, loading, error, placeOrder } = usePlaceOrder();
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const calculateTotalAmount = (cartItems) => {
     return cartItems.reduce(
@@ -21,13 +27,23 @@ const Cart = () => {
     quantity,
   }));
 
-  const createOrder = () => {
+  const createOrder = async (event) => {
+    event.preventDefault();
     let order = {
       userId: user._id,
       items: extractedFields,
       totalAmount: totalAmount,
     };
+
+    await placeOrder(user._id, extractedFields, totalAmount);
+    navigate("/order");
   };
+
+  useEffect(() => {
+    if (order) {
+      dispatch(orderActions.addOrder(order));
+    }
+  }, [order]);
 
   return (
     <>
@@ -82,11 +98,24 @@ const Cart = () => {
                 <p className="text-sm text-green-600">₹{`${totalAmount}`}</p>
               </div>
             </div>
-            <div className={`flex justify-center items-center w-full py-3 `}>
-              <button className="w-full h-auto bg-orange-500 py-2 text-white rounded-lg hover:bg-orange-600 font-semibold roboto">
-                Place Order
-              </button>
-            </div>
+
+            {user.username !== "undefined" ? (
+              <form
+                onSubmit={createOrder}
+                className={`flex justify-center items-center w-full py-3 `}
+              >
+                <button
+                  type="submit"
+                  className="w-full h-auto bg-orange-500 py-2 text-white rounded-lg hover:bg-orange-600 font-semibold roboto"
+                >
+                  Place Order
+                </button>
+              </form>
+            ) : (
+              <h1 className="text-center text-lg p-5 text-orange-600 font-bold poppins">
+                Please Login to place the order
+              </h1>
+            )}
           </div>
         </div>
       ) : (
