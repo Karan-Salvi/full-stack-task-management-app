@@ -119,11 +119,3 @@ npm run dev
 - Ensured compatibility between frontend and backend APIs.
 - Handled responsiveness for different device screen sizes.
 
-jaksd ;ladjs ;lkja lka jsdl;f
-asd alsdfj asdf 
-as fasdf jas
-ef asdf 
-asdf 
-asdf asd ad 
- 
-
