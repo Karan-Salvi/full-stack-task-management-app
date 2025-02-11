@@ -120,11 +120,3 @@ npm run dev
 - Handled responsiveness for different device screen sizes.
 - Making dataflow as effiecient as possible.
 
-jaksd ;ladjs ;lkja lka jsdl;f
-asd alsdfj asdf 
-as fasdf jas
-ef asdf 
-asdf 
-asdf asd ad 
- 
-
