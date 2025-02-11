@@ -118,5 +118,6 @@ npm run dev
 ## Challenges and Assumptions
 - Ensured compatibility between frontend and backend APIs.
 - Handled responsiveness for different device screen sizes.
+- Making dataflow as effiecient as possible.
 
 
